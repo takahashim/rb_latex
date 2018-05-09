@@ -13,6 +13,7 @@
 \usepackage{longtable}
 \usepackage{graphicx}
 \usepackage{pxrubrica}
+\newcommand{\rblatexNewpage}{\newpage}
 
 %%\usepackage{acronym}
 
@@ -21,7 +22,10 @@
 \hypersetup{colorlinks=true,urlcolor=blue}
 
 \begin{document}
-<% @item_list.filenames.each do |filename| %>
+<% @item_list.filenames.each_with_index do |filename, idx| %>
 \input{<%= filename %>}
+<% if @item_list.filenames.size > idx + 1 %>
+\rblatexNewpage
+<% end %>
 <% end %>
 \end{document}

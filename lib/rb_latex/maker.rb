@@ -8,6 +8,8 @@ module RbLatex
     extend Forwardable
 
     attr_accessor :document_class
+    attr_accessor :latex_command
+    attr_accessor :dvipdf_command
 
     RbLatex::MetaInfo::ATTRS.each do |name|
       def_delegator :@meta_info, name
@@ -30,8 +32,8 @@ module RbLatex
       @work_dir = ".rblatex_work"
       @item_list = RbLatex::ItemList.new
       @meta_info = RbLatex::MetaInfo.new
-      @latex_cmd = "uplatex"
-      @dvipdfmx_cmd = "dvipdfmx"
+      @latex_command = "uplatex"
+      @dvipdf_command = "dvipdfmx"
       @document_class = ["jlreq", "book,b5paper,openany"]
     end
 
@@ -49,7 +51,7 @@ module RbLatex
         Dir.chdir(dir) do
           generate_src(dir)
           exec_latex(dir)
-          exec_dvipdfmx(dir)
+          exec_dvipdf(dir)
         end
         FileUtils.cp(File.join(dir, "book.pdf"), filename)
       end
@@ -73,7 +75,7 @@ module RbLatex
     end
 
     def exec_latex(dir)
-      cmd = "#{@latex_cmd} book.tex"
+      cmd = "#{@latex_command} book.tex"
       3.times do |i|
         out, status = Open3.capture2e(cmd)
         if !status.success?
@@ -83,8 +85,8 @@ module RbLatex
       end
     end
 
-    def exec_dvipdfmx(dir)
-      cmd = "#{@dvipdfmx_cmd} book.dvi"
+    def exec_dvipdf(dir)
+      cmd = "#{@dvipdf_command} book.dvi"
       out, status = Open3.capture2e(cmd)
       if !status.success?
         @error_log = out

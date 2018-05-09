@@ -1,0 +1,27 @@
+\documentclass[uplatex,dvipdfmx]{jsbook}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{plext}
+\usepackage{listings}
+\usepackage[dvipdfmx]{hyperref}
+\usepackage{pxjahyper}
+\usepackage{fancyvrb}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{longtable}
+\usepackage{graphicx}
+\usepackage{pxrubrica}
+
+%%\usepackage{acronym}
+
+\VerbatimFootnotes
+
+%\setcounter{footnote}{<%= @converter.options[:footnote_nr] - 1 %>}
+
+\hypersetup{colorlinks=true,urlcolor=blue}
+
+\begin{document}
+<%= @body %>
+\end{document}

@@ -10,6 +10,7 @@ module RbLatex
     attr_accessor :document_class
     attr_accessor :latex_command
     attr_accessor :dvipdf_command
+    attr_accessor :debug
 
     RbLatex::MetaInfo::ATTRS.each do |name|
       def_delegator :@meta_info, name
@@ -35,6 +36,7 @@ module RbLatex
       @latex_command = "uplatex"
       @dvipdf_command = "dvipdfmx"
       @document_class = ["jlreq", "book,b5paper,openany"]
+      @debug = nil
     end
 
     def default_config
@@ -80,17 +82,21 @@ module RbLatex
         out, status = Open3.capture2e(cmd)
         if !status.success?
           @error_log = out
-          raise RbLatex::Error, "fail to exec latex #{i}: #{cmd}"
+          if @debug
+            print STDERR, @error_log, "\n"
+          end
+          raise RbLatex::Error, "fail to exec latex (#{i}): #{cmd}"
         end
       end
     end
 
     def exec_dvipdf(dir)
+      return unless @dvipdf_command
       cmd = "#{@dvipdf_command} book.dvi"
       out, status = Open3.capture2e(cmd)
       if !status.success?
         @error_log = out
-        raise RbLatex::Error, "fail to exec latex #{i}: #{cmd}"
+        raise RbLatex::Error, "fail to exec dvipdf: #{cmd}"
       end
     end
 

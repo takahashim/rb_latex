@@ -6,16 +6,16 @@ module RbLatex
   class Maker
     extend Forwardable
 
-    def_delegator :@meta_info, :title
-    def_delegator :@meta_info, :title=
-    def_delegator :@meta_info, :creator
-    def_delegator :@meta_info, :creator=
+    RbLatex::MetaInfo::ATTRS.each do |name|
+      def_delegator :@meta_info, name
+      name_eq = "#{name}=".to_sym
+      def_delegator :@meta_info, name_eq
+    end
+
     def_delegator :@meta_info, :date
     def_delegator :@meta_info, :date=
     def_delegator :@meta_info, :lastmodified
     def_delegator :@meta_info, :lastmodified=
-    def_delegator :@meta_info, :page_progression_direction
-    def_delegator :@meta_info, :page_progression_direction=
     def_delegator :@meta_info, :add_creator
 
     attr_reader :work_dir

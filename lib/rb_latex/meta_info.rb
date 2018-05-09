@@ -1,7 +1,7 @@
 module RbLatex
   class MetaInfo
 
-    ATTRS = %i(title creator page_progression_direction language)
+    ATTRS = %i(title creator page_progression_direction language publisher)
 
     ATTRS.each do |name|
       define_method(name) do

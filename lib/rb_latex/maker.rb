@@ -32,7 +32,7 @@ module RbLatex
       @meta_info = RbLatex::MetaInfo.new
       @latex_cmd = "uplatex"
       @dvipdfmx_cmd = "dvipdfmx"
-      @document_class = ["jlreq", "b5paper"]
+      @document_class = ["jlreq", "book,b5paper,openany"]
     end
 
     def default_config

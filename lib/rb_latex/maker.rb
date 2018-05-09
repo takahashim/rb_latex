@@ -1,10 +1,13 @@
 require 'forwardable'
 require 'fileutils'
 require "open3"
+require "rb_latex/meta_info"
 
 module RbLatex
   class Maker
     extend Forwardable
+
+    attr_accessor :document_class
 
     RbLatex::MetaInfo::ATTRS.each do |name|
       def_delegator :@meta_info, name
@@ -29,6 +32,7 @@ module RbLatex
       @meta_info = RbLatex::MetaInfo.new
       @latex_cmd = "uplatex"
       @dvipdfmx_cmd = "dvipdfmx"
+      @document_class = ["jlreq", "b5paper"]
     end
 
     def default_config
@@ -59,6 +63,10 @@ module RbLatex
 
     def generate_src(dir)
       @item_list.generate(dir)
+      @dclass, @dclass_opt = @document_class
+      if @meta_info.page_progression_direction == "rtl" && !@dclass_opt.split(",").include?("tate")
+        @dclass_opt += ",tate"
+      end
       book_tex = apply_template("book.tex.erb")
       File.write(File.join(dir, "book.tex"), book_tex)
     end
@@ -107,9 +115,9 @@ module RbLatex
       if !debug
         Dir.mktmpdir('rblatex')
       else
-        FileUtils.remove_entry_secure(@work_dir)
+        FileUtils.rm_rf(@work_dir)
         Dir.mkdir(@work_dir)
-        @work_dir
+        File.absolute_path(@work_dir)
       end
     end
 

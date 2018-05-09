@@ -58,6 +58,7 @@ module RbLatex
       "\\newcommand{\\rblatexTitle}{#{escape_latex(title)}}\n"+
       "\\newcommand{\\rblatexAuthor}{#{escape_latex(author)}}\n"+
       "\\newcommand{\\rblatexPubdate}{#{escape_latex(date_to_s)}}\n"+
+      "\\newcommand{\\rblatexPublisher}{#{escape_latex(publisher)}}\n"+
       "\\newcommand{\\rblatexPageDirection}{#{escape_latex(page_progression_direction)}}\n"
     end
 

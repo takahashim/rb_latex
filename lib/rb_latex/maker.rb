@@ -74,6 +74,8 @@ module RbLatex
       end
       book_tex = apply_template("book.tex.erb")
       File.write(File.join(dir, "book.tex"), book_tex)
+      rblatexdefault_sty = apply_template("rblatexdefault.sty")
+      File.write(File.join(dir, "rblatexdefault.sty"), rblatexdefault_sty)
     end
 
     def exec_latex(dir)

@@ -1,39 +1,16 @@
 \documentclass[<%= @dclass_opt %>]{<%= @dclass %>}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{listings}
-\usepackage{fancyvrb}
-\usepackage{amssymb}
-\usepackage{amsmath}
-\usepackage{amsthm}
-\usepackage{amsfonts}
-\usepackage{longtable}
-\usepackage{graphicx}
-\usepackage{pxrubrica}
-\newcommand{\rblatexNewpage}{\newpage}
 
-<% if @latex_command == "lualatex" %>
-\usepackage[luatex]{hyperref}
-\usepackage{lltjext}
-<% else %>
-\usepackage[dvipdfmx]{hyperref}
-\usepackage{pxjahyper}
-\usepackage{plext}
-<% end %>
+\usepackage{rblatexdefault}
 
-\hypersetup{colorlinks=false,urlcolor=blue}
-%%\usepackage{acronym}
-
-\VerbatimFootnotes
-
-
-\setlength{\parindent}{0pt}
+\IfFileExists{rblatexcustom}{
+\usepackage{rblatexcustom}
+}
 
 \begin{document}
 <% @item_list.filenames.each_with_index do |filename, idx| %>
 \input{<%= filename %>}
 <% if @item_list.filenames.size > idx + 1 %>
-\rblatexNewpage
+\rblatexFileSeparator
 <% end %>
 <% end %>
 \end{document}

@@ -1,10 +1,7 @@
 \documentclass[<%= @dclass_opt %>]{<%= @dclass %>}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{plext}
 \usepackage{listings}
-\usepackage[dvipdfmx]{hyperref}
-\usepackage{pxjahyper}
 \usepackage{fancyvrb}
 \usepackage{amssymb}
 \usepackage{amsmath}
@@ -15,11 +12,20 @@
 \usepackage{pxrubrica}
 \newcommand{\rblatexNewpage}{\newpage}
 
+<% if @latex_command == "lualatex" %>
+\usepackage[luatex]{hyperref}
+\usepackage{lltjext}
+<% else %>
+\usepackage[dvipdfmx]{hyperref}
+\usepackage{pxjahyper}
+\usepackage{plext}
+<% end %>
+
+\hypersetup{colorlinks=false,urlcolor=blue}
 %%\usepackage{acronym}
 
 \VerbatimFootnotes
 
-\hypersetup{colorlinks=false,urlcolor=blue}
 
 \setlength{\parindent}{0pt}
 

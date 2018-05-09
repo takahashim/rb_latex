@@ -24,7 +24,10 @@ class RbLatex::MetaInfoTest < Test::Unit::TestCase
   end
 
   def test_add_creator
+    assert_equal "", @meta_info.author
     @meta_info.add_creator("foo", "aut")
+    @meta_info.add_creator("bar", "aut")
+    assert_equal "foo, bar", @meta_info.author
   end
 
 end

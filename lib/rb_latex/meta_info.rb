@@ -1,7 +1,7 @@
 module RbLatex
   class MetaInfo
 
-    ATTRS = %i(title creator page_progression_direction)
+    ATTRS = %i(title creator page_progression_direction language)
 
     ATTRS.each do |name|
       define_method(name) do
@@ -15,6 +15,7 @@ module RbLatex
 
     def initialize
       @info = Hash.new
+      @info[:creator] = Hash.new
     end
 
     def date=(time)
@@ -53,15 +54,31 @@ module RbLatex
       @info
     end
 
+    def to_latex
+      "\\newcommand{\\rblatexTitle}{#{escape_latex(title)}}\n"+
+      "\\newcommand{\\rblatexAuthor}{#{escape_latex(author)}}\n"+
+      "\\newcommand{\\rblatexPubdate}{#{escape_latex(date_to_s)}}\n"+
+      "\\newcommand{\\rblatexPageDirection}{#{escape_latex(page_progression_direction)}}\n"
+    end
+
     def date_format(time)
       time.strftime("%Y年%-m月%-d日")
     end
 
     def add_creator(name, role)
-      if !@info[:creator]
-        !@info[:creator] = Hash.new
+      if !@info[:creator][role]
+        !@info[:creator][role] = Array.new
       end
-      @info[:creator][role] = name
+      @info[:creator][role] << name
+    end
+
+    def author(sep = ", ")
+      aut = @info[:creator]["aut"]
+      if aut
+        aut.join(sep)
+      else
+        ""
+      end
     end
   end
 end

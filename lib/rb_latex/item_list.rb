@@ -1,11 +1,15 @@
 module RbLatex
   class ItemList
     def initialize()
-      @items = Hash.nwe
+      @items = Hash.new
     end
 
     def add_item(filename, content)
       @items[filename] = content
+    end
+
+    def filenames
+      @items.keys
     end
 
     def generate(dir)

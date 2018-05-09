@@ -18,14 +18,17 @@ module RbLatex
     def_delegator :@meta_info, :page_progression_direction=
     def_delegator :@meta_info, :add_creator
 
-    attr_reader :workdir
+    attr_reader :work_dir
 
-    def initialize(srcdir)
-      @srcdir = srcdir
+    def initialize(root_dir)
+      @root_dir = root_dir
+      @root_fullpath = File.absolute_path(root_dir)
       @config = default_config
-      @workdir = ".rblatex_work"
+      @work_dir = ".rblatex_work"
       @item_list = RbLatex::ItemList.new
-      @meta_info = RbLatex::ItemList.new
+      @meta_info = RbLatex::MetaInfo.new
+      @latex_cmd = "uplatex"
+      @dvipdfmx_cmd = "dvipdfmx"
     end
 
     def default_config
@@ -37,23 +40,27 @@ module RbLatex
     end
 
     def generate_pdf(filename, debug: nil)
-      change_working_dir(debug) do |dir|
+      in_working_dir(debug) do |dir|
         copy_files(dir)
-        generate_src(dir)
-        exec_latex(dir)
-        exec_dvipdfmx(dir)
+        Dir.chdir(dir) do
+          generate_src(dir)
+          exec_latex(dir)
+          exec_dvipdfmx(dir)
+        end
       end
     end
 
     def copy_files(dir)
-      Dir.entries(@src).each do |path|
+      Dir.entries(@root_dir).each do |path|
         next if path == "." or path == ".."
-        FileUtils.cp_r(path, dir, :dereference_root)
+        FileUtils.cp_r(File.join(@root_dir, path), dir, dereference_root: true)
       end
     end
 
     def generate_src(dir)
       @item_list.generate(dir)
+      book_tex = apply_template("book.tex.erb")
+      File.write(File.join(dir, "book.tex"), book_tex)
     end
 
     def exec_latex(dir)
@@ -74,26 +81,24 @@ module RbLatex
         @error_log = out
         raise RbLatex::Error, "fail to exec latex #{i}: #{cmd}"
       end
-      FileUtils.cp("book.pdf", File.join(@src, "book.pdf"))
+      FileUtils.cp("book.pdf", File.join(@root_fullpath, "book.pdf"))
     end
 
-    def workdir=(dir)
+    def work_dir=(dir)
       if dir =~ /\A[A-Za-z0-9_\.-]+\z/
-        @workdir = dir
+        @work_dir = dir
       else
-        raise RbLatex::Error, "workdir should use characters 'A-Za-z0-9_.-' only."
+        raise RbLatex::Error, "work_dir should use characters 'A-Za-z0-9_.-' only."
       end
     end
 
-    def change_working_dir(debug)
-      workdir = prepare_working_dir(debug)
+    def in_working_dir(debug)
+      work_dir = prepare_working_dir(debug)
       begin
-        Dir.chdir(workdir) do |dir|
-          yield dir
-        end
+        yield work_dir
       ensure
         if !debug
-          FileUtils.remove_entry_secure(dir)
+          FileUtils.remove_entry_secure(work_dir)
         end
       end
     end
@@ -102,10 +107,16 @@ module RbLatex
       if !debug
         Dir.mktmpdir('rblatex')
       else
-        FileUtils.remove_entry_secure(@workdir)
-        Dir.mkdir(@workdir)
-        @workdir
+        FileUtils.remove_entry_secure(@work_dir)
+        Dir.mkdir(@work_dir)
+        @work_dir
       end
     end
+
+    def apply_template(template_file)
+      template = File.read(File.join(RbLatex::TEMPLATES_DIR, template_file))
+      return ERB.new(template).result(binding)
+    end
+
   end
 end

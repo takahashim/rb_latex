@@ -18,10 +18,10 @@
 
 \VerbatimFootnotes
 
-%\setcounter{footnote}{<%= @converter.options[:footnote_nr] - 1 %>}
-
 \hypersetup{colorlinks=true,urlcolor=blue}
 
 \begin{document}
-<%= @body %>
+<% @item_list.filenames.each do |filename| %>
+\input{<%= filename %>}
+<% end %>
 \end{document}

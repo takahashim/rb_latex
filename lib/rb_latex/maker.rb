@@ -51,6 +51,7 @@ module RbLatex
           exec_latex(dir)
           exec_dvipdfmx(dir)
         end
+        FileUtils.cp(File.join(dir, "book.pdf"), filename)
       end
     end
 
@@ -89,7 +90,6 @@ module RbLatex
         @error_log = out
         raise RbLatex::Error, "fail to exec latex #{i}: #{cmd}"
       end
-      FileUtils.cp("book.pdf", File.join(@root_fullpath, "book.pdf"))
     end
 
     def work_dir=(dir)

@@ -61,7 +61,7 @@ module RbLatex
 
     def copy_files(dir)
       Dir.entries(@root_dir).each do |path|
-        next if path == "." or path == ".." or path =~ /\A\.rblatex/
+        next if path == "." or path == ".." or path == @work_dir
         FileUtils.cp_r(File.join(@root_dir, path), dir, dereference_root: true)
       end
     end

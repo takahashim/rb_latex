@@ -52,8 +52,7 @@ module RbLatex
         copy_files(dir)
         Dir.chdir(dir) do
           generate_src(dir)
-          exec_latex(dir)
-          exec_dvipdf(dir)
+          compile_latex(dir)
         end
         FileUtils.cp(File.join(dir, "book.pdf"), filename)
       end
@@ -78,8 +77,9 @@ module RbLatex
       File.write(File.join(dir, "rblatexdefault.sty"), rblatexdefault_sty)
     end
 
-    def exec_latex(dir)
-      cmd = "#{@latex_command} book.tex"
+    def compile_latex(dir)
+      texfile = "book.tex"
+      cmd = "#{@latex_command} #{texfile}"
       3.times do |i|
         out, status = Open3.capture2e(cmd)
         if !status.success?
@@ -90,11 +90,14 @@ module RbLatex
           raise RbLatex::Error, "fail to exec latex (#{i}): #{cmd}"
         end
       end
+      dvifile = File.basename(texfile, ".*") + ".dvi"
+      if File.exist?(dvifile)
+        exec_dvipdf(dvifile)
+      end
     end
 
-    def exec_dvipdf(dir)
-      return if !File.exist?("book.dvi")
-      cmd = "#{@dvipdf_command} book.dvi"
+    def exec_dvipdf(dvifile)
+      cmd = "#{@dvipdf_command} #{dvifile}"
       out, status = Open3.capture2e(cmd)
       if !status.success?
         @error_log = out

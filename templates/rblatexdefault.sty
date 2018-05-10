@@ -19,18 +19,19 @@
 \RequirePackage{longtable}
 \RequirePackage{graphicx}
 \RequirePackage{pxrubrica}
-\RequirePackage{hyperref}
 
 \ifrblatex@luatex%
+\RequirePackage[luatex,pdfencoding=auto]{hyperref}
 \RequirePackage{lltjext}
 \fi
 
 \ifrblatex@dvipdfmx%
+\RequirePackage[dvipdfmx]{hyperref}
 \RequirePackage{pxjahyper}
 \RequirePackage{plext}
 \fi
 
-\hypersetup{colorlinks=false,urlcolor=blue}
+%%\hypersetup{colorlinks=false,urlcolor=blue}
 \VerbatimFootnotes
 \setlength{\parindent}{0pt}
 \newcommand{\rblatexFileSeparator}{\newpage}

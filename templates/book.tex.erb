@@ -1,8 +1,12 @@
 \documentclass[<%= @dclass_opt %>]{<%= @dclass %>}
 
-\usepackage{rblatexdefault}
+<% if @latex_command =~ /lualatex/ %>
+\usepackage[luatex]{rblatexdefault}
+<% else %>
+\usepackage[dvipdfmx]{rblatexdefault}
+<% end %>
 
-\IfFileExists{rblatexcustom}{
+\IfFileExists{rblatexcustom.sty}{
 \usepackage{rblatexcustom}
 }
 

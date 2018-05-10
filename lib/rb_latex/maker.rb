@@ -93,7 +93,7 @@ module RbLatex
     end
 
     def exec_dvipdf(dir)
-      return unless @dvipdf_command
+      return if !File.exist?("book.dvi")
       cmd = "#{@dvipdf_command} book.dvi"
       out, status = Open3.capture2e(cmd)
       if !status.success?

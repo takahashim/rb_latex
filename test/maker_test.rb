@@ -30,6 +30,20 @@ class RbLatex::MakerTest < Test::Unit::TestCase
     end
   end
 
+  def test_book_name
+    Dir.mktmpdir do |dir|
+      @maker2 = RbLatex::Maker.new(dir)
+      @maker2.book_name = "test_book"
+      Dir.chdir(dir) do
+        @maker2.add_item("file.tex", "hello\n\nworld\n")
+        @maker2.generate_pdf("test.pdf", debug: true)
+        assert_true File.exist?(File.join(@maker2.work_dir, "file.tex"))
+        assert_true File.exist?(File.join(@maker2.work_dir, "test_book.tex"))
+        assert_true File.exist?("test.pdf")
+      end
+    end
+  end
+
   def test_work_dir
     Dir.mktmpdir do |dir|
       @maker2 = RbLatex::Maker.new(dir)

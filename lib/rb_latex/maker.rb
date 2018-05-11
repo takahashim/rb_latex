@@ -12,6 +12,7 @@ module RbLatex
     attr_accessor :dvipdf_command
     attr_accessor :debug
     attr_accessor :book_name
+    attr_reader :work_dir
 
     RbLatex::MetaInfo::ATTRS.each do |name|
       def_delegator :@meta_info, name
@@ -24,8 +25,6 @@ module RbLatex
     def_delegator :@meta_info, :lastmodified
     def_delegator :@meta_info, :lastmodified=
     def_delegator :@meta_info, :add_creator
-
-    attr_reader :work_dir
 
     def initialize(root_dir)
       @root_dir = root_dir
@@ -77,7 +76,7 @@ module RbLatex
       if @meta_info.page_progression_direction == "rtl" && !@dclass_opt.split(",").include?("tate")
         @dclass_opt += ",tate"
       end
-      book_tex = apply_template(book_filename(".tex.erb"))
+      book_tex = apply_template("book.tex.erb")
       File.write(File.join(dir, book_filename(".tex")), book_tex)
       rblatexdefault_sty = apply_template("rblatexdefault.sty")
       File.write(File.join(dir, "rblatexdefault.sty"), rblatexdefault_sty)

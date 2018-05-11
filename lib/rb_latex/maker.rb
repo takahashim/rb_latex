@@ -25,7 +25,6 @@ module RbLatex
     def initialize(root_dir)
       @root_dir = root_dir
       @root_fullpath = File.absolute_path(root_dir)
-      @config = default_config
       @work_dir = ".rblatex_work"
       @item_list = RbLatex::ItemList.new
       @meta_info = RbLatex::MetaInfo.new
@@ -34,10 +33,6 @@ module RbLatex
       @document_class = ["jlreq", "book,b5paper,openany"]
       @debug = nil
       @book_name = "book"
-    end
-
-    def default_config
-      {}
     end
 
     def add_item(filename, content)

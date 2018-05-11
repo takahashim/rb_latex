@@ -11,6 +11,7 @@ module RbLatex
     attr_accessor :latex_command
     attr_accessor :dvipdf_command
     attr_accessor :debug
+    attr_accessor :book_name
 
     RbLatex::MetaInfo::ATTRS.each do |name|
       def_delegator :@meta_info, name
@@ -37,6 +38,7 @@ module RbLatex
       @dvipdf_command = "dvipdfmx"
       @document_class = ["jlreq", "book,b5paper,openany"]
       @debug = nil
+      @book_name = "book"
     end
 
     def default_config
@@ -47,6 +49,10 @@ module RbLatex
       @item_list.add_item(filename, content)
     end
 
+    def book_filename(ext = ".pdf")
+      "#{@book_name}#{ext}"
+    end
+
     def generate_pdf(filename, debug: nil)
       in_working_dir(debug) do |dir|
         copy_files(dir)
@@ -54,7 +60,7 @@ module RbLatex
           generate_src(dir)
           compile_latex(dir)
         end
-        FileUtils.cp(File.join(dir, "book.pdf"), filename)
+        FileUtils.cp(File.join(dir, book_filename), filename)
       end
     end
 
@@ -71,14 +77,14 @@ module RbLatex
       if @meta_info.page_progression_direction == "rtl" && !@dclass_opt.split(",").include?("tate")
         @dclass_opt += ",tate"
       end
-      book_tex = apply_template("book.tex.erb")
-      File.write(File.join(dir, "book.tex"), book_tex)
+      book_tex = apply_template(book_filename(".tex.erb"))
+      File.write(File.join(dir, book_filename(".tex")), book_tex)
       rblatexdefault_sty = apply_template("rblatexdefault.sty")
       File.write(File.join(dir, "rblatexdefault.sty"), rblatexdefault_sty)
     end
 
     def compile_latex(dir)
-      texfile = "book.tex"
+      texfile = book_filename(".tex")
       cmd = "#{@latex_command} #{texfile}"
       3.times do |i|
         out, status = Open3.capture2e(cmd)
@@ -90,7 +96,7 @@ module RbLatex
           raise RbLatex::Error, "fail to exec latex (#{i}): #{cmd}"
         end
       end
-      dvifile = File.basename(texfile, ".*") + ".dvi"
+      dvifile = book_filename(".dvi")
       if File.exist?(dvifile)
         exec_dvipdf(dvifile)
       end

@@ -33,6 +33,7 @@ module RbLatex
       @document_class = ["jlreq", "book,b5paper,openany"]
       @debug = nil
       @book_name = "book"
+      @default_option = nil
     end
 
     def add_item(filename, content)
@@ -63,9 +64,12 @@ module RbLatex
 
     def generate_src(dir)
       @item_list.generate(dir)
-      @dclass, @dclass_opt = @document_class
-      if @meta_info.page_progression_direction == "rtl" && !@dclass_opt.split(",").include?("tate")
-        @dclass_opt += ",tate"
+      @dclass, @dclass_option = @document_class
+      if @meta_info.page_progression_direction == "rtl" && !@dclass_option.split(",").include?("tate")
+        @dclass_option += ",tate"
+      end
+      if @latex_command =~ /lualatex/
+        @default_option = "lualatex"
       end
       book_tex = apply_template("book.tex.erb")
       File.write(File.join(dir, book_filename(".tex")), book_tex)

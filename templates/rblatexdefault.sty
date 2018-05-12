@@ -2,10 +2,7 @@
 
 \newif\ifrblatex@luatex
 \rblatex@luatexfalse
-\newif\ifrblatex@dvipdfmx
-\rblatex@dvipdfmxfalse
 \DeclareOption{luatex}{\rblatex@luatextrue}
-\DeclareOption{dvipdfmx}{\rblatex@dvipdfmxtrue}
 \ProcessOptions\relax
 
 \RequirePackage[utf8]{inputenc}
@@ -23,9 +20,7 @@
 \ifrblatex@luatex%
 \RequirePackage[luatex,pdfencoding=auto]{hyperref}
 \RequirePackage{lltjext}
-\fi
-
-\ifrblatex@dvipdfmx%
+\else %% default
 \RequirePackage[dvipdfmx]{hyperref}
 \RequirePackage{pxjahyper}
 \RequirePackage{plext}

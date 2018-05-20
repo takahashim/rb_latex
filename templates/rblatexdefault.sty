@@ -14,13 +14,14 @@
 \RequirePackage{amsthm}
 \RequirePackage{amsfonts}
 \RequirePackage{longtable}
-\RequirePackage{graphicx}
 \RequirePackage{pxrubrica}
 
 \ifrblatex@luatex
+\RequirePackage[luatex]{graphicx}
 \RequirePackage[luatex,pdfencoding=auto]{hyperref}
 \RequirePackage{lltjext}
 \else %% default
+\RequirePackage[dvipdfmx]{graphicx}
 \RequirePackage[dvipdfmx]{hyperref}
 \RequirePackage{pxjahyper}
 \RequirePackage{plext}

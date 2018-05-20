@@ -1,0 +1,18 @@
+\newpage
+\thispagestyle{empty}
+\vspace*{\fill}
+\begin{tabular}{ll}
+<%- @colophons.each do |key, val| -%>
+<%-   if val.kind_of? Array  -%>
+<%-     val.each_with_index do |item, idx| -%>
+<%-       if idx > 0 -%>
+ & <%= item %> \\
+<%-       else -%>
+<%= key %> & <%= item %> \\
+<%-       end -%>
+<%-     end -%>
+<%-   else -%>
+<%= key %> & <%= val %> \\
+<%-   end -%>
+<%- end -%>
+\end{tabular}

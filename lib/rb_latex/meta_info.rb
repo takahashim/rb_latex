@@ -42,6 +42,11 @@ module RbLatex
 ##      @info
     end
 
+    def colophons
+      {'author' => author,
+       'publisher' => publisher}
+    end
+
     def to_latex
       "\\newcommand{\\rblatexTitle}{#{escape_latex(title)}}\n"+
       "\\newcommand{\\rblatexAuthor}{#{escape_latex(author)}}\n"+

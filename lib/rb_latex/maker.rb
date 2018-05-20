@@ -12,6 +12,7 @@ module RbLatex
     attr_accessor :dvipdf_command
     attr_accessor :debug
     attr_accessor :book_name
+    attr_accessor :colophons
     attr_reader :work_dir
 
     RbLatex::MetaInfo::ATTRS.each do |name|
@@ -36,6 +37,7 @@ module RbLatex
       @debug = nil
       @book_name = "book"
       @default_option = nil
+      @colophons = nil
     end
 
     def add_item(filename, content)
@@ -73,10 +75,15 @@ module RbLatex
       if @latex_command =~ /lualatex/
         @default_option = "luatex"
       end
+      @colophons = @meta_info.colophons
       book_tex = apply_template("book.tex.erb")
       File.write(File.join(dir, book_filename(".tex")), book_tex)
       rblatexdefault_sty = apply_template("rblatexdefault.sty")
       File.write(File.join(dir, "rblatexdefault.sty"), rblatexdefault_sty)
+      if @colophons
+        colophon_tex = apply_template("colophon.tex.erb")
+        File.write(File.join(dir, "colophon.tex"), colophon_tex)
+      end
     end
 
     def compile_latex(dir)
@@ -138,7 +145,7 @@ module RbLatex
 
     def apply_template(template_file)
       template = File.read(File.join(RbLatex::TEMPLATES_DIR, template_file))
-      return ERB.new(template).result(binding)
+      return ERB.new(template, nil, '-').result(binding)
     end
 
   end

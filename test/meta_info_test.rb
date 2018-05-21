@@ -19,8 +19,8 @@ class RbLatex::MetaInfoTest < Test::Unit::TestCase
 
   def test_date
     time = Time.parse("2018-05-01")
-    @meta_info.date = time
-    assert_equal "2018年5月1日", @meta_info.date_to_s
+    @meta_info.pubdate = time
+    assert_equal "2018年5月1日", @meta_info.pubdate_to_s
   end
 
   def test_add_creator

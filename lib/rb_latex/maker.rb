@@ -20,7 +20,9 @@ module RbLatex
       def_delegator :@meta_info, name_eq
     end
 
-    def_delegators :@meta_info, :date, :date=, :lastmodified, :lastmodified=, :add_creator
+    def_delegators :@meta_info, :lastmodified, :lastmodified=, :add_creator
+    def_delegator :@meta_info, :pubdate, :date
+    def_delegator :@meta_info, :pubdate=, :date=
 
     def initialize(root_dir)
       @root_dir = root_dir

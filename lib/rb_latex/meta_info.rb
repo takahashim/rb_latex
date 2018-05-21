@@ -1,57 +1,45 @@
 module RbLatex
   class MetaInfo
 
-    ATTRS = %i(title creator page_progression_direction language publisher)
+    ATTRS = %i(title creator page_progression_direction language publisher colophons colophon_keys)
 
     ATTRS.each do |name|
-      define_method(name) do
-        @info[name]
-      end
-      name_eq = "#{name}=".to_sym
-      define_method(name_eq) do |val|
-        @info[name] = val
-      end
+      attr_accessor name
     end
+
+    attr_reader :pubdate, :lastmodified
 
     def initialize
-      @info = Hash.new
-      @info[:creator] = Hash.new
+      @creator = Hash.new
+      @pubdate = nil
     end
 
-    def date=(time)
+    def pubdate=(time)
       if time.kind_of? String
-        @info[:date] = Time.parse(time)
+        @pubdate = Time.parse(time)
       else
-        @info[:date] = time
+        @pubdate = time
       end
     end
 
-    def date
-      @info[:date]
-    end
-
-    def date_to_s
-      date_format(@info[:date])
+    def pubdate_to_s
+      date_format(@pubdate)
     end
 
     def lastmodified=(time)
       if time.kind_of? String
-        @info[:lastmodified] = Time.parse(time)
+        @lastmodified = Time.parse(time)
       else
-        @info[:lastmodified] = time
+        @lastmodified = time
       end
     end
 
-    def lastmodified
-      @info[:lastmodified]
-    end
-
     def lastmodified_to_s
-      date_format(@info[:lastmodified])
+      date_format(@lastmodified)
     end
 
     def all
-      @info
+##      @info
     end
 
     def to_latex
@@ -67,14 +55,14 @@ module RbLatex
     end
 
     def add_creator(name, role)
-      if !@info[:creator][role]
-        !@info[:creator][role] = Array.new
+      if !@creator[role]
+        !@creator[role] = Array.new
       end
-      @info[:creator][role] << name
+      @creator[role] << name
     end
 
     def author(sep = ", ")
-      aut = @info[:creator]["aut"]
+      aut = @creator["aut"]
       if aut
         aut.join(sep)
       else

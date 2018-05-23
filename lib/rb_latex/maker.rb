@@ -71,7 +71,7 @@ module RbLatex
         @dclass_option += ",tate"
       end
       if @latex_command =~ /lualatex/
-        @default_option = "lualatex"
+        @default_option = "luatex"
       end
       book_tex = apply_template("book.tex.erb")
       File.write(File.join(dir, book_filename(".tex")), book_tex)

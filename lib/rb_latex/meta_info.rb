@@ -44,6 +44,9 @@ module RbLatex
     end
 
     def to_latex
+      "\\title{#{escape_latex(title)}}\n"+
+      "\\author{#{escape_latex(author)}}\n"+
+      "\\date{}\n"+
       "\\newcommand{\\rblatexTitle}{#{escape_latex(title)}}\n"+
       "\\newcommand{\\rblatexAuthor}{#{escape_latex(author)}}\n"+
       "\\newcommand{\\rblatexPubdate}{#{escape_latex(pubdate_to_s)}}\n"+

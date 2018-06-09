@@ -12,6 +12,9 @@
 }
 
 \begin{document}
+<% if @titlepage %>
+\maketitle
+<% end %>
 <% @item_list.filenames.each_with_index do |filename, idx| %>
 \input{<%= filename %>}
 <% if @item_list.filenames.size > idx + 1 %>

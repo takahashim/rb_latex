@@ -12,6 +12,7 @@ module RbLatex
     attr_accessor :dvipdf_command
     attr_accessor :debug
     attr_accessor :book_name
+    attr_accessor :titlepage
     attr_accessor :colophons
     attr_accessor :colophon_template
     attr_reader :work_dir
@@ -40,6 +41,7 @@ module RbLatex
       @default_option = nil
       @colophon_template = "colophon.tex.erb"
       @colophons = nil
+      @titlepage = nil
     end
 
     def add_item(filename, content)

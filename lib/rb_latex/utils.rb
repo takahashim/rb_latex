@@ -15,7 +15,7 @@ module RbLatex
     }
 
     def escape_latex(str)
-      str.each_char.map do |char|
+      str.to_s.each_char.map do |char|
         ESCAPE_CHARS[char] || char
       end.join("")
     end

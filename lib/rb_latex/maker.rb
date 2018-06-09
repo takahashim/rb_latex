@@ -13,6 +13,7 @@ module RbLatex
     attr_accessor :debug
     attr_accessor :book_name
     attr_accessor :colophons
+    attr_accessor :colophon_template
     attr_reader :work_dir
 
     RbLatex::MetaInfo::ATTRS.each do |name|
@@ -37,6 +38,7 @@ module RbLatex
       @debug = nil
       @book_name = "book"
       @default_option = nil
+      @colophon_template = "colophon.tex.erb"
       @colophons = nil
     end
 
@@ -80,7 +82,7 @@ module RbLatex
       rblatexdefault_sty = apply_template("rblatexdefault.sty")
       File.write(File.join(dir, "rblatexdefault.sty"), rblatexdefault_sty)
       if @colophons
-        colophon_tex = apply_template("colophon.tex.erb")
+        colophon_tex = apply_template(@colophon_template, template_dir: @colophon_dir)
         File.write(File.join(dir, "colophon.tex"), colophon_tex)
       end
     end
@@ -142,8 +144,9 @@ module RbLatex
       end
     end
 
-    def apply_template(template_file)
-      template = File.read(File.join(RbLatex::TEMPLATES_DIR, template_file))
+    def apply_template(template_file, template_dir: nil)
+      template_dir ||= RbLatex::TEMPLATES_DIR
+      template = File.read(File.join(template_dir, template_file))
       return ERB.new(template, nil, '-').result(binding)
     end
 

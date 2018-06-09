@@ -1,5 +1,8 @@
 \documentclass[<%= @dclass_option %>]{<%= @dclass %>}
 
+%% meta_info
+<%= @meta_info.to_latex %>
+
 %% load RbLatex default stlye
 \usepackage[<%= @default_option %>]{rblatexdefault}
 

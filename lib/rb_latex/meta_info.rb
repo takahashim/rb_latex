@@ -1,5 +1,6 @@
 module RbLatex
   class MetaInfo
+    include RbLatex::Utils
 
     ATTRS = %i(title creator page_progression_direction language publisher)
 
@@ -45,13 +46,17 @@ module RbLatex
     def to_latex
       "\\newcommand{\\rblatexTitle}{#{escape_latex(title)}}\n"+
       "\\newcommand{\\rblatexAuthor}{#{escape_latex(author)}}\n"+
-      "\\newcommand{\\rblatexPubdate}{#{escape_latex(date_to_s)}}\n"+
+      "\\newcommand{\\rblatexPubdate}{#{escape_latex(pubdate_to_s)}}\n"+
       "\\newcommand{\\rblatexPublisher}{#{escape_latex(publisher)}}\n"+
       "\\newcommand{\\rblatexPageDirection}{#{escape_latex(page_progression_direction)}}\n"
     end
 
     def date_format(time)
-      time.strftime("%Y年%-m月%-d日")
+      if time
+        time.strftime("%Y年%-m月%-d日")
+      else
+        ""
+      end
     end
 
     def add_creator(name, role)

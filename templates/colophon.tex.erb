@@ -1,6 +1,9 @@
 \newpage
 \thispagestyle{empty}
 \vspace*{\fill}
+{\noindent\Large \rblatexTitle } \\
+\rblatexColophonBefore \\
+\rule[2pt]{\textwidth}{1pt} \\
 \begin{tabular}{ll}
 <%- @colophons.each do |key, val| -%>
 <%-   if val.kind_of? Array  -%>
@@ -16,3 +19,6 @@
 <%-   end -%>
 <%- end -%>
 \end{tabular}
+~ \\
+\rule[0pt]{\textwidth}{1pt} \\
+\rblatexColophonAfter \\

@@ -2,8 +2,8 @@
 \thispagestyle{empty}
 \vspace*{\fill}
 {\noindent\Large \rblatexTitle } \\
-\rblatexColophonBefore \\
-\rule[2pt]{\textwidth}{1pt} \\
+\rule[0pt]{\textwidth}{0.5pt} \\
+\rblatexColophonBefore
 \begin{tabular}{ll}
 <%- @colophons.each do |key, val| -%>
 <%-   if val.kind_of? Array  -%>
@@ -20,5 +20,5 @@
 <%- end -%>
 \end{tabular}
 ~ \\
-\rule[0pt]{\textwidth}{1pt} \\
-\rblatexColophonAfter \\
+\rule[0pt]{\textwidth}{0.5pt} \\
+\rblatexColophonAfter

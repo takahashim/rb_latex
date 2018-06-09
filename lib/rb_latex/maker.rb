@@ -75,7 +75,6 @@ module RbLatex
       if @latex_command =~ /lualatex/
         @default_option = "luatex"
       end
-      @colophons = @meta_info.colophons
       book_tex = apply_template("book.tex.erb")
       File.write(File.join(dir, book_filename(".tex")), book_tex)
       rblatexdefault_sty = apply_template("rblatexdefault.sty")

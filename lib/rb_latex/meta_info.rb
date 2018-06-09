@@ -1,7 +1,7 @@
 module RbLatex
   class MetaInfo
 
-    ATTRS = %i(title creator page_progression_direction language publisher colophons colophon_keys)
+    ATTRS = %i(title creator page_progression_direction language publisher)
 
     ATTRS.each do |name|
       attr_accessor name
@@ -40,11 +40,6 @@ module RbLatex
 
     def all
 ##      @info
-    end
-
-    def colophons
-      {'author' => author,
-       'publisher' => publisher}
     end
 
     def to_latex

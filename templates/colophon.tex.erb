@@ -5,7 +5,7 @@
 \rule[0pt]{\textwidth}{0.5pt} \\
 <%= @colophon_before || "\\rblatexColophonBefore" %>
 \begin{tabular}{ll}
-<%- @colophons.each do |key, val| -%>
+<%- @colophon.each do |key, val| -%>
 <%-   if val.kind_of? Array  -%>
 <%-     val.each_with_index do |item, idx| -%>
 <%-       if idx > 0 -%>

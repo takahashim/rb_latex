@@ -13,7 +13,7 @@ module RbLatex
     attr_accessor :debug
     attr_accessor :book_name
     attr_accessor :titlepage
-    attr_accessor :colophons
+    attr_accessor :colophon
     attr_accessor :colophon_before
     attr_accessor :colophon_after
     attr_accessor :colophon_template
@@ -42,7 +42,7 @@ module RbLatex
       @book_name = "book"
       @default_option = nil
       @colophon_template = "colophon.tex.erb"
-      @colophons = nil
+      @colophon = nil
       @colophon_before = nil
       @colophon_after = nil
       @titlepage = nil
@@ -87,7 +87,7 @@ module RbLatex
       File.write(File.join(dir, book_filename(".tex")), book_tex)
       rblatexdefault_sty = apply_template("rblatexdefault.sty")
       File.write(File.join(dir, "rblatexdefault.sty"), rblatexdefault_sty)
-      if @colophons
+      if @colophon
         colophon_tex = apply_template(@colophon_template, template_dir: @colophon_dir)
         File.write(File.join(dir, "colophon.tex"), colophon_tex)
       end

@@ -7,11 +7,11 @@ class RbLatex::ColophonTest < Test::Unit::TestCase
   end
 
   def test_colophon
-    @maker.colophons = {"著　者" => "ジョン・テスト",
-                        "訳　者" => ["田中一郎","田中二郎"],
-                        "発行日" => "2018年5月1日",
-                        "発行所" => "テスト出版",
-                        "印刷所" => "テスト印刷"}
+    @maker.colophon = {"著　者" => "ジョン・テスト",
+                       "訳　者" => ["田中一郎","田中二郎"],
+                       "発行日" => "2018年5月1日",
+                       "発行所" => "テスト出版",
+                       "印刷所" => "テスト印刷"}
     colophon_tex = @maker.apply_template("colophon.tex.erb")
     expected = <<-EOB
 \\newpage

@@ -14,6 +14,8 @@ module RbLatex
     attr_accessor :book_name
     attr_accessor :titlepage
     attr_accessor :colophons
+    attr_accessor :colophon_before
+    attr_accessor :colophon_after
     attr_accessor :colophon_template
     attr_reader :work_dir
 
@@ -41,6 +43,8 @@ module RbLatex
       @default_option = nil
       @colophon_template = "colophon.tex.erb"
       @colophons = nil
+      @colophon_before = nil
+      @colophon_after = nil
       @titlepage = nil
     end
 

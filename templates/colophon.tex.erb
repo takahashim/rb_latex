@@ -3,7 +3,7 @@
 \vspace*{\fill}
 {\noindent\Large \rblatexTitle } \\
 \rule[0pt]{\textwidth}{0.5pt} \\
-\rblatexColophonBefore
+<%= @colophon_before || "\\rblatexColophonBefore" %>
 \begin{tabular}{ll}
 <%- @colophons.each do |key, val| -%>
 <%-   if val.kind_of? Array  -%>
@@ -21,4 +21,4 @@
 \end{tabular}
 ~ \\
 \rule[0pt]{\textwidth}{0.5pt} \\
-\rblatexColophonAfter
+<%= @colophon_after || "\\rblatexColophonAfter" %>

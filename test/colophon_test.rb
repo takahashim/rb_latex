@@ -30,7 +30,7 @@ class RbLatex::ColophonTest < Test::Unit::TestCase
 \\end{tabular}
 ~ \\\\
 \\rule[0pt]{\\textwidth}{0.5pt} \\\\
-\\rblatexColophonAfter
+{\\small \\rblatexColophonAfter}
 EOB
     assert_equal expected, colophon_tex
   end

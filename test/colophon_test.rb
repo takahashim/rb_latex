@@ -18,8 +18,8 @@ class RbLatex::ColophonTest < Test::Unit::TestCase
 \\thispagestyle{empty}
 \\vspace*{\\fill}
 {\\noindent\\Large \\rblatexTitle } \\\\
-\\rblatexColophonBefore \\\\
-\\rule[2pt]{\\textwidth}{1pt} \\\\
+\\rule[0pt]{\\textwidth}{0.5pt} \\\\
+\\rblatexColophonBefore
 \\begin{tabular}{ll}
 著　者 & ジョン・テスト \\\\
 訳　者 & 田中一郎 \\\\
@@ -29,8 +29,8 @@ class RbLatex::ColophonTest < Test::Unit::TestCase
 印刷所 & テスト印刷 \\\\
 \\end{tabular}
 ~ \\\\
-\\rule[0pt]{\\textwidth}{1pt} \\\\
-\\rblatexColophonAfter \\\\
+\\rule[0pt]{\\textwidth}{0.5pt} \\\\
+\\rblatexColophonAfter
 EOB
     assert_equal expected, colophon_tex
   end

@@ -15,6 +15,7 @@
 \RequirePackage{amsfonts}
 \RequirePackage{longtable}
 \RequirePackage{pxrubrica}
+\RequirePackage{alltt}
 
 \ifrblatex@luatex
 \RequirePackage[luatex]{graphicx}
@@ -26,6 +27,12 @@
 \RequirePackage{pxjahyper}
 \RequirePackage{plext}
 \fi
+
+<% if @meta_info.page_progression_direction != "rtl" %>
+\RequirePackage[most]{tcolorbox}
+\newenvironment{rblcodeblock}{\begin{tcolorbox}[breakable, enhanced jigsaw, colback=black!10!white, colframe=black!30!white]\small\setlength{\baselineskip}{1.2zw}\begin{alltt}}{\end{alltt}\end{tcolorbox}}
+\RequirePackage{pxeveryshi}
+<% end %>
 
 %%\hypersetup{colorlinks=false,urlcolor=blue}
 \VerbatimFootnotes

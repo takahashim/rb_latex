@@ -2,7 +2,7 @@
 \thispagestyle{empty}
 \vspace*{\fill}
 {\noindent\Large \rblatexTitle } \\
-\rule[0pt]{\textwidth}{0.5pt} \\
+\rule[0pt]{\linewidth}{0.5pt} \\
 <%= @colophon_before || "\\rblatexColophonBefore" %>
 \begin{tabular}{ll}
 <%- @colophon.each do |key, val| -%>
@@ -20,5 +20,5 @@
 <%- end -%>
 \end{tabular}
 ~ \\
-\rule[0pt]{\textwidth}{0.5pt} \\
+\rule[0pt]{\linewidth}{0.5pt} \\
 {\small <%= @colophon_after || "\\rblatexColophonAfter" %>}

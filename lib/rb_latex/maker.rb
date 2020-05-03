@@ -153,7 +153,7 @@ module RbLatex
     def apply_template(template_file, template_dir: nil)
       template_dir ||= RbLatex::TEMPLATES_DIR
       template = File.read(File.join(template_dir, template_file))
-      return ERB.new(template, nil, '-').result(binding)
+      return ERB.new(template, trim_mode: '-').result(binding)
     end
 
   end
